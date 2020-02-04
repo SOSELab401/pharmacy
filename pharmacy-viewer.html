@@ -1,0 +1,87 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>健保診所列表</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style type="text/css">
+        body {
+            font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", TW-Kai;
+            font-size: 3vmin;
+        }
+
+        h5 {
+            font-size: 4vmin;
+        }
+
+        h6,
+        label {
+            font-size: 3.5vmin;
+        }
+    </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    </script>
+</head>
+
+<body>
+
+    <!-- template
+    <div class="card" style="width: 18rem;" id="list">
+        <div class="card-body">
+            <h5 class="card-title">健保診所</h5>
+            <h6 class="card-subtitle mb-2 text-muted">住址與電話</h6>
+            <a href="#" class="card-link">地圖連結</a>
+            <a href="#" class="card-link">健康保險署連結</a>
+        </div>
+    </div>
+    -->
+
+    <h5 style="margin:20px;color:navy">健保診所列表</h5>
+    <label style="margin-left:20px;">請輸入關鍵字過濾(如基隆市中正區):
+        <input id="myInput" type="text" placeholder="Search.." />
+        <input id="search" type="button" value="過濾" /></label><br>
+    <label><input style="margin-left:20px;" id="all" type="button" value="全部顯示" /></label>
+    <br>
+
+    <div class="card" style="margin:20px;" id="list">
+    </div>
+
+    <script type="text/javascript">
+
+        var jsonUrl = "TW-pharmacy.json";
+
+        $.getJSON(jsonUrl, function (data) {
+            for (var item in data) {
+
+                if (data[item].closingDate != "") continue;
+
+                let addr = data[item].address ? data[item].address : "住址無資料";
+                let tel = data[item].tel ? data[item].tel : "電話無資料";
+                let mapURL = data[item].address ? "https://www.google.com/maps?q=" + data[item].name + "+" + data[item].address : "https://www.google.com/maps?q=" + data[item].name;
+                var content = "<div class='card-body' style='border-bottom: solid lightgrey 1px;'>" +
+                    "<h5 class='card-title' >" + data[item].id + ": " + data[item].name + "</h5>" +
+                    "<h6 class='card-subtitle mb-2 text-muted'>" + addr + "<br>" + tel + "</h6> " +
+                    "<a href = '" + mapURL + "' target='_blank' class='card-link' > 地圖連結</a >" +
+                    "<a href = 'http://www.nhi.gov.tw/QueryN/Query3_Detail.aspx?HospID=" + data[item].id + "' target='_blank' class='card-link' > 健康保險署連結</a >" +
+                    "</div>";
+                $("#list").append(content);
+            }
+        });
+
+        $("#search").on("click", function () {
+            var value = $("#myInput").val();
+            $("#list div").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+        $("#all").on("click", function () {
+            $("#myInput").val("");
+            $("#list div").show();
+        });
+    </script>
+</body>
+
+</html>
