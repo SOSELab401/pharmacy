@@ -29,7 +29,7 @@ function getPharmcyData(jsonUrl) {
                 "<h5 class='card-title' >", data[item].id, ": ", data[item].name + "</h5>",
                 "<h6 class='card-subtitle mb-2 text-muted'>", addr, "<br>", tel, "</h6>",
                 "<a href = '", mapURL, "' target='_blank' class='card-link'>地圖連結</a>",
-                "<a href = 'http://www.nhi.gov.tw/QueryN/Query3_Detail.aspx?HospID=", data[item].id, "' target='_blank' class='card-link'>全民健保署連結</a>",
+                "<a href = 'http://www.nhi.gov.tw/QueryN/Query3_Detail.aspx?HospID=", data[item].id, "' target='_blank' class='card-link'>中央健保署連結</a>",
                 "</div>"
             ].join("");
             $("#list").append(content);
