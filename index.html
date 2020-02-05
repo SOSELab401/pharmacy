@@ -88,6 +88,8 @@
 
         var jsonUrl = "TW-pharmacy.json";
 
+        $("#search").attr("disabled", true);
+
         $.getJSON(jsonUrl, function (data) {
             for (var item in data) {
 
@@ -107,6 +109,7 @@
                 $("#list").append(content);
                 $("#loading").hide();
                 $("#msg").hide();
+                $("#search").attr("disabled", false);
             }
         });
 
@@ -121,14 +124,16 @@
         //Show all data
         $("#all").on("click", function () {
             $("#msg").show();
+            $("#myInput").val("");
+            $("#search").attr("disabled", true);
             $("#list").hide();
             $("#loading").show("fast", function () {
-                $("#myInput").val("");
                 $("#list div").filter(function () {
                     $(this).toggle(true);
                     $("#loading").hide();
                     $("#list").show();
                     $("#msg").hide();
+                    $("#search").attr("disabled", false);
                 });
             });
         });
