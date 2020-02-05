@@ -89,6 +89,7 @@
         var jsonUrl = "TW-pharmacy.json";
 
         $("#search").attr("disabled", true);
+        $("#myInput").val("");
 
         $.getJSON(jsonUrl, function (data) {
             for (var item in data) {
