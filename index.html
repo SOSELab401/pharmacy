@@ -2,8 +2,10 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
     <title>健保診所列表</title>
+    <meta charset="utf-8">
+    <meta name="author" content="SOSELab@NTOU">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <style type="text/css">
@@ -20,8 +22,40 @@
         label {
             font-size: 3.5vmin;
         }
+
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 200px;
+            height: 200px;
+            -webkit-animation: spin 2s linear infinite;
+            /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        /* Safari */
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
     </script>
 </head>
 
@@ -45,6 +79,8 @@
     <label><input style="margin-left:20px;" id="all" type="button" value="全部顯示" /></label>
     <br>
 
+    <div class="loader" id="loading" style="margin:20px;"></div>
+
     <div class="card" style="margin:20px;" id="list">
     </div>
 
@@ -60,6 +96,8 @@
                 let addr = data[item].address ? data[item].address : "住址無資料";
                 let tel = data[item].tel ? data[item].tel : "電話無資料";
                 let mapURL = data[item].address ? "https://www.google.com/maps?q=" + data[item].name + "+" + data[item].address : "https://www.google.com/maps?q=" + data[item].name;
+
+                //Add new card body
                 var content = "<div class='card-body' style='border-bottom: solid lightgrey 1px;'>" +
                     "<h5 class='card-title' >" + data[item].id + ": " + data[item].name + "</h5>" +
                     "<h6 class='card-subtitle mb-2 text-muted'>" + addr + "<br>" + tel + "</h6> " +
@@ -67,6 +105,7 @@
                     "<a href = 'http://www.nhi.gov.tw/QueryN/Query3_Detail.aspx?HospID=" + data[item].id + "' target='_blank' class='card-link' > 健康保險署連結</a >" +
                     "</div>";
                 $("#list").append(content);
+                $("#loading").hide();
             }
         });
 
@@ -78,8 +117,15 @@
         });
 
         $("#all").on("click", function () {
-            $("#myInput").val("");
-            $("#list div").show();
+            $("#list").hide();
+            $("#loading").show("fast", function () {
+                $("#myInput").val("");
+                $("#list div").filter(function () {
+                    $(this).toggle(true);
+                    $("#loading").hide();
+                    $("#list").show();
+                });
+            });
         });
     </script>
 </body>
