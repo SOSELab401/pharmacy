@@ -1,4 +1,4 @@
-# pharmacy
+# 台灣健保藥局列表
 Data source: https://data.nhi.gov.tw/Datasets/DatasetDetail.aspx?id=329&Mid=A111068&fbclid=IwAR19BNcoqXto6wb-W5ENf9CUdxkvMObBBt2KFg4sTeloLQf4XsFibWaWDEI  
 醫事機構代碼: id  
 醫事機構名稱: name  
