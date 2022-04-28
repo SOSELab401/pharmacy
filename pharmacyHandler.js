@@ -3,18 +3,18 @@
  */
 $(function() {
     let jsonUrl = "TW-pharmacy.json";
-    intialize();
-    getPharmcyData(jsonUrl);
+    initialize();
+    getPharmacyData(jsonUrl);
     setFilterDataBtn();
     setShowAllDataBtn();
 });
 
-function intialize() {
+function initialize() {
     $("#search").attr("disabled", true);
     $("#myInput").val("");
 }
 
-function getPharmcyData(jsonUrl) {
+function getPharmacyData(jsonUrl) {
     $.getJSON(jsonUrl, function(data) {
         for (let item in data) {
 
